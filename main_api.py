@@ -39,9 +39,11 @@ def get_id_token(custom_token):
     res = r.post(
         f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key={API_KEY}",
         data={"token": custom_token, "returnSecureToken": True},
-    ).json()
+    )
+    if res.status_code != 200:
+        raise HTTPException(res.status_code, res.json()["error"]["message"])
 
-    return res
+    return res.json()
 
 
 @app.post("/register")

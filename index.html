@@ -11,6 +11,7 @@
   <!--Your web app's Firebase configuration-->
   <script type="text/javascript" src="./firebase_config.js"></script>
   <script>
+    var url = "http://192.168.2.69:8120"
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
   </script>
@@ -20,7 +21,7 @@
   <div id="signin">
     <input id="username"></input>
     <input id="pw"></input>
-    <input id="ok" type="button" value="ok" onclick="signin()">
+    <input id="ok" type="button" value="signin" onclick="signin()">
   </div>
 
   <input id="signout" type="button" value="signout" onclick="signout()">
@@ -31,31 +32,31 @@
       var username = document.getElementById("username").value
       var pw = document.getElementById("pw").value
 
-      fetch("http://192.168.2.129:8120/login", {
+      fetch(`${url}/login`, {
         mode: "no-cors",
         method: "post",
         body: JSON.stringify({ username: username, password: pw })
       })
-        .then(
-          console.log("berhasil")
+        .then(response => alert(JSON.stringify(response.json()))
+          // alert("berhasil")
         )
         .catch(function (error) {
-          console.log(error)
+          alert(error)
         })
     }
 
     function signout() {
 
-      fetch("http://192.168.2.129:8120/logout", {
+      fetch(`${url}/logout`, {
         mode: "no-cors",
         method: "post",
         body: JSON.stringify({ username: username, password: pw })
       })
         .then(
-          console.log("berhasil")
+          alert("berhasil")
         )
         .catch(function (error) {
-          console.log(error)
+          alert(error)
         })
     }
 
