@@ -1,0 +1,74 @@
+<HTML>
+
+<head>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+
+  <!--Your web app's Firebase configuration-->
+  <script type="text/javascript" src="./firebase_config.js"></script>
+  <script>
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</head>
+
+<body>
+  <div id="signin">
+    <input id="username"></input>
+    <input id="pw"></input>
+    <input id="ok" type="button" value="ok" onclick="signin()">
+  </div>
+
+  <input id="signout" type="button" value="signout" onclick="signout()">
+</body>
+<footer>
+  <script>
+    function signin() {
+      var username = document.getElementById("username").value
+      var pw = document.getElementById("pw").value
+
+      fetch("http://192.168.2.129:8120/login", {
+        mode: "no-cors",
+        method: "post",
+        body: JSON.stringify({ username: username, password: pw })
+      })
+        .then(
+          console.log("berhasil")
+        )
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+
+    function signout() {
+
+      fetch("http://192.168.2.129:8120/logout", {
+        mode: "no-cors",
+        method: "post",
+        body: JSON.stringify({ username: username, password: pw })
+      })
+        .then(
+          console.log("berhasil")
+        )
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // User is signed in.
+        alert("user signed in")
+      } else {
+
+        alert("user signed out")
+      }
+    });
+  </script>
+</footer>
+
+</HTML>
